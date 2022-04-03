@@ -1,0 +1,2744 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Nieoczekiwana znajomość</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+            font-weight: 300;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+            font-weight: 500;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+            font-weight: 600;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+            font-weight: 700;
+        }
+
+        body {
+            background-color: #36393e;
+            color: #dcddde;
+            font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 17px;
+            font-weight: 400;
+			max-width: 700px;
+			margin-left: auto;
+			margin-right: auto;
+        }
+
+        a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            object-fit: contain;
+        }
+
+        .markdown {
+            max-width: 100%;
+            line-height: 1.3;
+            overflow-wrap: break-word;
+        }
+
+        .preserve-whitespace {
+            white-space: pre-wrap;
+        }
+
+        .spoiler-text {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .spoiler-text--hidden {
+            cursor: pointer;
+            background-color: #202225;
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .spoiler-text--hidden:hover {
+            background-color: rgba(32, 34, 37, 0.8);
+        }
+
+        .spoiler-text--hidden::selection {
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .quote {
+            display: flex;
+            margin: 0.05em 0;
+        }
+
+        .quote-border {
+            margin-right: 0.5em;
+            border: 2px solid #4f545c;
+            border-radius: 3px;
+        }
+
+        .pre {
+            background-color: #2f3136;
+            font-family: "Consolas", "Courier New", Courier, monospace;
+        }
+
+        .pre--multiline {
+            margin-top: 0.25em;
+            padding: 0.5em;
+            border: 2px solid #282b30;
+            border-radius: 5px;
+            color: #b9bbbe;
+        }
+
+        .pre--multiline.hljs {
+            background-color: #2f3136;
+            color: #b9bbbe;
+        }
+
+        .pre--inline {
+            padding: 2px;
+            border-radius: 3px;
+            font-size: 0.85em;
+        }
+
+        .mention {
+            border-radius: 3px;
+            padding: 0 2px;
+            color: #dee0fc;
+            background-color: rgba(88, 101, 242, .3);
+            font-weight: 500;
+        }
+
+        .mention:hover {
+            background-color: #5865f2;
+            color: #ffffff
+        }
+
+        .timestamp {
+            border-radius: 3px;
+            padding: 0 2px;
+            background-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .emoji {
+            width: 1.325em;
+            height: 1.325em;
+            margin: 0 0.06em;
+            vertical-align: -0.4em;
+        }
+
+        .emoji--small {
+            width: 1em;
+            height: 1em;
+        }
+
+        .emoji--large {
+            width: 2.8em;
+            height: 2.8em;
+        }
+
+        .preamble {
+            display: grid;
+            margin: 0 0.3em 0.6em 0.3em;
+            max-width: 100%;
+            grid-template-columns: auto 1fr;
+        }
+
+        .preamble__guild-icon-container {
+            grid-column: 1;
+        }
+
+        .preamble__guild-icon {
+            max-width: 88px;
+            max-height: 88px;
+        }
+
+        .preamble__entries-container {
+            grid-column: 2;
+            margin-left: 0.6em;
+        }
+
+        .preamble__entry {
+            font-size: 1.4em;
+            color: #ffffff;
+        }
+
+        .preamble__entry--small {
+            font-size: 1em;
+        }
+
+        .chatlog {
+            max-width: 100%;
+        }
+
+        .chatlog__message-group {
+            display: grid;
+            margin: 0 0.6em;
+            padding: 0.9em 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            grid-template-columns: auto 1fr;
+        }
+
+        .chatlog__reference-symbol {
+            grid-column: 1;
+            margin: 8px 4px 4px 18px;
+            border-left: 2px solid #4f545c;
+            border-top: 2px solid #4f545c;
+            border-radius: 8px 0 0 0;
+        }
+
+        .chatlog__reference {
+            display: flex;
+            grid-column: 2;
+            margin-bottom: 0.25em;
+            font-size: 0.875em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            align-items: center;
+            color: #b5b6b8;
+        }
+
+        .chatlog__reference-avatar {
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            margin-right: 0.25em;
+        }
+
+        .chatlog__reference-name {
+            margin-right: 0.3em;
+            font-weight: 600;
+        }
+
+        .chatlog__reference-content {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__reference-content a:hover {
+            text-decoration: none;
+        }
+
+        .chatlog__reference-link {
+            cursor: pointer;
+            color: #b5b6b8;
+        }
+
+        .chatlog__reference-link * {
+            display: inline;
+            pointer-events: none;
+        }
+
+        .chatlog__reference-link:hover {
+            color: #ffffff;
+        }
+
+        .chatlog__reference-link:hover *:not(.spoiler-text) {
+            color: #ffffff;
+        }
+
+        .chatlog__reference-edited-timestamp {
+            margin-left: 0.25em;
+            font-size: 0.8em;
+            unicode-bidi: bidi-override;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__author-avatar-container {
+            grid-column: 1;
+            width: 40px;
+            height: 40px;
+            margin-right: 16px;
+        }
+
+        .chatlog__author-avatar {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .chatlog__messages {
+            grid-column: 2;
+            min-width: 50%;
+            direction: ltr;
+        }
+
+        .chatlog__author-name {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .chatlog__timestamp {
+            margin-left: 0.3em;
+            font-size: 0.75em;
+            direction: ltr;
+            unicode-bidi: bidi-override;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__message {
+            padding: 0.1em 0.3em;
+            margin: 0 -0.3em;
+            background-color: transparent;
+            transition: background-color 1s ease;
+        }
+
+        .chatlog__message--highlighted {
+            background-color: rgba(114, 137, 218, 0.2);
+        }
+
+        .chatlog__message--pinned {
+            background-color: rgba(249, 168, 37, 0.05);
+        }
+
+        .chatlog__content {
+            font-size: 0.95em;
+            word-wrap: break-word;
+        }
+
+        .chatlog__edited-timestamp {
+            margin-left: 0.15em;
+            font-size: 0.8em;
+        }
+
+        .chatlog__attachment {
+            display: inline-block;
+            position: relative;
+            margin-top: 0.3em;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .chatlog__attachment--hidden {
+            cursor: pointer;
+            box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatlog__attachment--hidden * {
+            pointer-events: none;
+        }
+
+        .chatlog__attachment-spoiler-caption {
+            display: none;
+            z-index: 999;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 0.4em 0.8em;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-radius: 20px;
+            color: #dcddde;
+            font-size: 0.9em;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-spoiler-caption {
+            display: block;
+        }
+
+        .chatlog__attachment--hidden:hover .chatlog__attachment-spoiler-caption {
+            color: #fff;
+        }
+
+        .chatlog__attachment-media {
+            vertical-align: top;
+            max-width: 45vw;
+            max-height: 500px;
+            border-radius: 3px;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-media {
+            filter: blur(44px);
+        }
+
+        .chatlog__attachment-generic {
+            width: 100%;
+            max-width: 520px;
+            height: 40px;
+            padding: 10px;
+            background-color: #2f3136;
+            border: 1px solid #292b2f;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-generic {
+            filter: blur(44px);
+        }
+
+        .chatlog__attachment-generic-icon {
+            float: left;
+            width: 30px;
+            height: 100%;
+            margin-right: 10px;
+        }
+
+        .chatlog__attachment-generic-size {
+            color: #72767d;
+            font-size: 12px;
+        }
+
+        .chatlog__attachment-generic-name {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__edited-timestamp {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__embed {
+            display: flex;
+            margin-top: 0.3em;
+            max-width: 520px;
+        }
+
+        .chatlog__embed-color-pill {
+            flex-shrink: 0;
+            width: 0.25em;
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+
+        .chatlog__embed-color-pill--default {
+            background-color: #202225;
+        }
+
+        .chatlog__embed-content-container {
+            display: flex;
+            flex-direction: column;
+            padding: 0.5em 0.6em;
+            background-color: rgba(46, 48, 54, 0.3);
+            border: 1px solid rgba(46, 48, 54, 0.6);
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        .chatlog__embed-content {
+            display: flex;
+            width: 100%;
+        }
+
+        .chatlog__embed-text {
+            flex: 1;
+        }
+
+        .chatlog__embed-author {
+            display: flex;
+            margin-bottom: 0.3em;
+            align-items: center;
+        }
+
+        .chatlog__embed-author-icon {
+            margin-right: 0.5em;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .chatlog__embed-author-name {
+            font-size: 0.875em;
+            font-weight: 600;
+            direction: ltr;
+            unicode-bidi: bidi-override;
+            color: #ffffff
+        }
+
+        .chatlog__embed-author-name-link {
+            color: #ffffff;
+        }
+
+        .chatlog__embed-title {
+            margin-bottom: 0.2em;
+            font-size: 0.875em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .chatlog__embed-description {
+            font-weight: 500;
+            font-size: 0.85em;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 0.5em;
+        }
+
+        .chatlog__embed-field {
+            flex: 0;
+            min-width: 100%;
+            max-width: 506px;
+            padding-top: 0.6em;
+            font-size: 0.875em;
+        }
+
+        .chatlog__embed-field--inline {
+            flex: 1;
+            flex-basis: auto;
+            min-width: 150px;
+        }
+
+        .chatlog__embed-field-name {
+            margin-bottom: 0.2em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .chatlog__embed-field-value {
+            font-weight: 500;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-thumbnail {
+            flex: 0;
+            margin-left: 1.2em;
+            max-width: 80px;
+            max-height: 80px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-image-container {
+            margin-top: 0.6em;
+        }
+
+        .chatlog__embed-image {
+            max-width: 500px;
+            max-height: 400px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-footer {
+            margin-top: 0.6em;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-footer-icon {
+            margin-right: 0.2em;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+
+        .chatlog__embed-footer-text {
+            vertical-align: middle;
+            font-size: 0.75em;
+            font-weight: 500;
+        }
+
+        .chatlog__embed-plainimage {
+            vertical-align: top;
+            max-width: 45vw;
+            max-height: 500px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-spotify {
+            border: 0;
+        }
+
+        .chatlog__embed-youtube-container {
+            margin-top: 0.6em;
+        }
+
+        .chatlog__embed-youtube {
+            border: 0;
+            border-radius: 3px;
+        }
+
+        .chatlog__sticker {
+            width: 180px;
+            height: 180px;
+        }
+
+        .chatlog__sticker--media {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .chatlog__reactions {
+            display: flex;
+        }
+
+        .chatlog__reaction {
+            display: flex;
+            align-items: center;
+            margin: 0.35em 0.1em 0.1em 0;
+            padding: .125rem .375rem;
+            background-color: #2f3136;
+            border-radius: 8px;
+            border-color: transparent;
+            border-width: 1px;
+            border-style: solid;
+        }
+
+        .chatlog__reaction:hover {
+            border-color: hsla(0,0%,100%,.2);
+            border-width: 1px;
+            border-style: solid;
+            background-color: transparent;
+        }
+
+        .chatlog__reaction-count {
+            min-width: 9px;
+            margin-left: 0.35em;
+            font-size: 0.875em;
+            color: #b9bbbe;
+        }
+
+        .chatlog__reaction:hover .chatlog__reaction-count {
+            color: #dcddde;
+        }
+
+        .chatlog__bot-tag {
+            position: relative;
+            top: -.1em;
+            margin-left: 0.3em;
+            padding: 0.05em 0.3em;
+            border-radius: 3px;
+            line-height: 1.3;
+            background-color: #5865F2;
+            color: #ffffff;
+            font-size: 0.625em;
+            font-weight: 500;
+        }
+
+        .postamble {
+            margin: 1.4em 0.3em 0.6em 0.3em;
+            padding: 1em;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .postamble__entry {
+            color: #ffffff;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(e => hljs.highlightBlock(e));
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.8.1/lottie.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.chatlog__sticker--media[data-source]').forEach(e => {
+                const imageDataUrl = e.getAttribute('data-source');
+
+                const anim = lottie.loadAnimation({
+                  container: e,
+                  renderer: 'svg',
+                  loop: true,
+                  autoplay: true,
+                  path: imageDataUrl
+                });
+
+                anim.addEventListener('data_failed', () =>
+                    e.innerHTML = '<strong>[Sticker cannot be rendered]</strong>'
+                );
+            });
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler-text--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler-text--hidden');
+            }
+            if (element && element.classList.contains('chatlog__attachment--hidden')) {
+                event.preventDefault();
+                element.classList.remove('chatlog__attachment--hidden');
+            }
+        }
+    </script>
+
+    <svg style="display: none">
+        <symbol id="icon-attachment" viewBox="0 0 720 960">
+            <path fill="#f4f5fb" d="M50,935a25,25,0,0,1-25-25V50A25,25,0,0,1,50,25H519.6L695,201.32V910a25,25,0,0,1-25,25Z" />
+            <path fill="#7789c4" d="M509.21,50,670,211.63V910H50V50H509.21M530,0H50A50,50,0,0,0,0,50V910a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50h0V191Z" />
+            <path fill="#f4f5fb" d="M530,215a25,25,0,0,1-25-25V50a25,25,0,0,1,16.23-23.41L693.41,198.77A25,25,0,0,1,670,215Z" />
+            <path fill="#7789c4" d="M530,70.71,649.29,190H530V70.71M530,0a50,50,0,0,0-50,50V190a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50Z" />
+        </symbol>
+    </svg>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="https://cdn.discordapp.com/icons/775009071237038081/e91c974646c3f3084d832c1ca2e289ad.png" alt="Guild icon" loading="lazy">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">Born to the Night</div>
+
+            <div class="preamble__entry preamble__entry--small">Nieoczekiwana znajomość - pierwsze spotkanie Mii i Benedicta</div>
+
+            <div class="preamble__entry preamble__entry--small">Klub Beastial Beats</div>
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+         
+    </div>
+
+    <div class="chatlog__messages">
+         
+
+
+        <span class="chatlog__timestamp">24-Nov-20 09:50 PM</span>
+
+            <div class="chatlog__message " data-message-id="780898086133825607" id="message-780898086133825607" title="Message sent: 24-Nov-20 09:50 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Możemy przyjąć, że Benedict wtedy był w sumie raczej syty i jego willpower był na solidnym poziomie, a chęć pożywienia się na Mii płynęła bardziej z nastroju chwili niż z Głodu. W takiej sytuacji byłby pewnie w stanie przerwać nim Blood Bond wszedłby na dobre... A przynajmniej taką miał nadzieję.
+
+</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+         
+    </div>
+
+    <div class="chatlog__messages">
+         
+
+
+        <span class="chatlog__timestamp">24-Nov-20 10:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="780901486439432242" id="message-780901486439432242" title="Message sent: 24-Nov-20 10:03 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">W takim razie:
+
+Chwilę po tym jak Benedict uświadomił sobie, co robi, oderwał się od Mii w strachu przed ewentualnymi Więzami. Gdy spojrzeli na siebie, w progu ustronnego miejsca stał już następujący mężczyzna:</span>
+
+                        </div>
+                    </div>
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="https://cdn.discordapp.com/attachments/780860449532936212/780901486196424725/Bruno_Orn.jpg">
+                                <img class="chatlog__attachment-media" src="https://cdn.discordapp.com/attachments/780860449532936212/780901486196424725/Bruno_Orn.jpg" alt="Image attachment" title="Image: Bruno_Orn.jpg (206,02 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="780902146089418793" id="message-780902146089418793" title="Message sent: 24-Nov-20 10:06 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Ciemne okulary miał w dłoni, a jego wzrok przeciął się ze spojrzeniem Benedicta. <em>&quot;Przejdź w kąt i pozostań tam, chyba że pozwolę ci odejść&quot;</em>, padła komenda, kt&#243;ra w niezwykły spos&#243;b stłamsiła wolę Benedicta. Nie mając nic do powiedzenia wobec tej komendy przesunąłeś się posłusznie, nie myśląc nawet nad tym.
+
+Mężczyzna pozostał wpatrzony w Benedicta i spytał Mię czy zabrał jej Krew. Co odpowiedziała?</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 10:12 PM</span>
+
+            <div class="chatlog__message " data-message-id="780903631137538079" id="message-780903631137538079" title="Message sent: 24-Nov-20 10:12 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Mia chwilę patrzyła na niego bez słowa zszokowana całą sytuacją, a potem odpowiedziała, że jeśli jej zabrał to niewiele.</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+         
+    </div>
+
+    <div class="chatlog__messages">
+         
+
+
+        <span class="chatlog__timestamp">24-Nov-20 10:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="780904587581325329" id="message-780904587581325329" title="Message sent: 24-Nov-20 10:16 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Mężczyzna wyciągnął dłoń w kierunku Benedicta, ale nie poszło za tym - na razie - nic więcej niż pytanie, dlaczego zastał go pr&#243;bującego pić z jego podopiecznej. Tym razem po prostu pytał. Nie było w tym tej samej dziwnej władczości, co wtedy gdy wydał polecenie. Co odpowiedział Benedict?</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 10:19 PM</span>
+
+            <div class="chatlog__message " data-message-id="780905426606751765" id="message-780905426606751765" title="Message sent: 24-Nov-20 10:19 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„Wyglądała na pyszny podwieczorek... nie wiedziałem, że aż tak pyszny.”</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="780906141663232011" id="message-780906141663232011" title="Message sent: 24-Nov-20 10:22 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">I się uśmiecham. Ale dobry obserwator widzi, że jestem napiety.</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="780906216070709288" id="message-780906216070709288" title="Message sent: 24-Nov-20 10:22 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Mimo cwaniackiej odpowiedzi.</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+         
+    </div>
+
+    <div class="chatlog__messages">
+         
+
+
+        <span class="chatlog__timestamp">24-Nov-20 10:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="780906306415886376" id="message-780906306415886376" title="Message sent: 24-Nov-20 10:22 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Tw&#243;j apetyt właśnie doprowadził cię na skraj Ostatecznej Śmierci, młodzieńcze.&quot; - słowa padły w kierunku Benedicta. Następne do Mii: &quot;Ofiaruję mu łaskę, jeżeli tego chcesz. Możesz nauczyć się wiele zar&#243;wno na jego śmierci, jak i jego ocaleniu.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 10:25 PM</span>
+
+            <div class="chatlog__message " data-message-id="780906859086217237" id="message-780906859086217237" title="Message sent: 24-Nov-20 10:25 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Nie lubię być tak pouczanym, ale wiem kiedy się zamknąć.</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 10:27 PM</span>
+
+            <div class="chatlog__message " data-message-id="780907387212398663" id="message-780907387212398663" title="Message sent: 24-Nov-20 10:27 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Jej oczy wyrażały jeszcze większe niedowierzanie niż przed paroma chwilami: &quot;To nie była jego wina. Chyba nie wiedział kim jestem&quot; - spojrzała z lekkim wahaniem na Benedicta - &quot;Nie r&#243;b mu krzywdy.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+         
+    </div>
+
+    <div class="chatlog__messages">
+         
+
+
+        <span class="chatlog__timestamp">24-Nov-20 10:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="780908550872236082" id="message-780908550872236082" title="Message sent: 24-Nov-20 10:31 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Mężczyzna opuścił rękę i wciąż obserwując Benedicta rzucił <em>&quot;teraz możesz odejść&quot;</em>. Zadziałało to zupełnie jak magiczne słowa, kt&#243;re wywołały w Benedikcie poczucie, że może zn&#243;w chodzić swobodnie.
+
+Potem jednak mężczyzna - Bruno - oczekiwał, że wyjaśnicie sobie tę sprawę.
+
+---
+
+I tutaj już pojawia się dla Was okazja, by faktycznie ustalić, jak ukształtowała się Wasza relacja na bazie tamtej niefortunnej sytuacji. <img loading="lazy" class="emoji " alt="🙂" title="slight_smile" src="https://twemoji.maxcdn.com/2/svg/1f642.svg"></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 10:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="780910598258032660" id="message-780910598258032660" title="Message sent: 24-Nov-20 10:39 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„Silny Tw&#243;j Stw&#243;rca”</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 10:42 PM</span>
+
+            <div class="chatlog__message " data-message-id="780911207183286313" id="message-780911207183286313" title="Message sent: 24-Nov-20 10:42 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Chyba...tak&quot; - powiedziała wciąż zaskoczna - &quot;Często zdarzają się takie sytuacje?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 10:46 PM</span>
+
+            <div class="chatlog__message " data-message-id="780912135110262875" id="message-780912135110262875" title="Message sent: 24-Nov-20 10:46 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„Pierwszy raz.. jeśli dobrze pamiętam.” Powoli się uspokajam.</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="780912659440730173" id="message-780912659440730173" title="Message sent: 24-Nov-20 10:48 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„Pewnie to już wiesz, ale jestem Benedict Atherton.” I zaczynam nucić arie z Carmen, zaczynająca się słowami: Toreador en ga-a-a-arde!</span>
+
+                                <span class="chatlog__edited-timestamp" title="24-Nov-20 10:48 PM"> </span>
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 10:51 PM</span>
+
+            <div class="chatlog__message " data-message-id="780913521336647730" id="message-780913521336647730" title="Message sent: 24-Nov-20 10:51 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Rzeczywiście twoja twarz wydawała mi się znajoma. Często w gazetach widzę artykuły o tobie. Nie spodziewałam się, że...&quot; - zawiesiła głos</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="780914070119120896" id="message-780914070119120896" title="Message sent: 24-Nov-20 10:53 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;To chyba nie jest proste być tak sławnym i...radzić sobie z tym wszystkim&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 10:59 PM</span>
+
+            <div class="chatlog__message " data-message-id="780915426217033789" id="message-780915426217033789" title="Message sent: 24-Nov-20 10:59 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Wiesz, jak na Spokrewnionego to mało, ale 10 lat wystarczyło, żeby sobie wyrobić pewne... sposoby... radzenia sobie z Krwiodawcami.&quot;</span>
+
+                                <span class="chatlog__edited-timestamp" title="24-Nov-20 10:59 PM"> </span>
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="780915842749562890" id="message-780915842749562890" title="Message sent: 24-Nov-20 11:00 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Ale zawsze zaszczyt spotkać Potomka Trzeciego Śmiertelnika.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 11:05 PM</span>
+
+            <div class="chatlog__message " data-message-id="780917146859077652" id="message-780917146859077652" title="Message sent: 24-Nov-20 11:05 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Tak...miło mi cię poznać&quot; - powiedziała trochę niepewnie - &quot;Wciąż zaskakuje mnie jak czasem łatwo trafić na jednego z nas. Mimo wszystko przyjmij moje przeprosiny za tę sytuacje, jestem jeszcze...niedoświadczona.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 11:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="780918037511536660" id="message-780918037511536660" title="Message sent: 24-Nov-20 11:09 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Nie ma za co przepraszam Milady&quot;. Jest już bardzo podekscytowany nową znajomością, widać po nim i słychać po głosie. &quot;Z tym sobie poradzimy.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="780918108973432874" id="message-780918108973432874" title="Message sent: 24-Nov-20 11:09 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Ja już 10 lat stąpam w mroku.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="780918220961873971" id="message-780918220961873971" title="Message sent: 24-Nov-20 11:10 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Aczkolwiek.. wiem, że to mało jak na nas.&quot;</span>
+
+                                <span class="chatlog__edited-timestamp" title="24-Nov-20 11:10 PM"> </span>
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="780919508244234281" id="message-780919508244234281" title="Message sent: 24-Nov-20 11:15 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Zgłodniałem.. przyznaje.&quot; I pokazuje kły.</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+
+    </div>
+</div>
+
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 11:24 PM</span>
+
+            <div class="chatlog__message " data-message-id="780921736211857408" id="message-780921736211857408" title="Message sent: 24-Nov-20 11:24 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Mia odruchowo rozmasowuje miejsce ugryzienia - &quot;Przyznam, że było to całkiem przyjemne, ale chyba nierozsądnie byłoby to powtarzać&quot; - uśmiechnęła się</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 11:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="780922200139628585" id="message-780922200139628585" title="Message sent: 24-Nov-20 11:26 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Nie, to za szybko, by się aż tak wiązać.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 11:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="780923087649505300" id="message-780923087649505300" title="Message sent: 24-Nov-20 11:29 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Moja krew by cię nie związała. Ale i tak, to możemy wr&#243;cić do środka, ja wciąż jestem głodna.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 11:35 PM</span>
+
+            <div class="chatlog__message " data-message-id="780924479755780136" id="message-780924479755780136" title="Message sent: 24-Nov-20 11:35 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;To ciekawy, czyżby Tremere? Jeszcze większy zaszczyt spotkać Pokrewnego z Wysokiego Klanu.&quot; Kłania się.</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 11:41 PM</span>
+
+            <div class="chatlog__message " data-message-id="780926216566997032" id="message-780926216566997032" title="Message sent: 24-Nov-20 11:41 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Zgadza się. Jesteś bardzo czarujący, ale na prawdę nie kłaniaj mi się, a przynajmniej nie z takiego powodu. Nie jestem nikim ważnym.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="780926386466586676" id="message-780926386466586676" title="Message sent: 24-Nov-20 11:42 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Chyba że takie są wsr&#243;d twoich zwyczaje...?&quot; - zawahała się przez chwilę</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 11:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="780927091385565186" id="message-780927091385565186" title="Message sent: 24-Nov-20 11:45 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Doprawdy jestem trochę staromodny, ale my należymy do wyższych sfer, high society Spokrewnionych możnaby rzec.&quot;</span>
+
+                                <span class="chatlog__edited-timestamp" title="24-Nov-20 11:46 PM"> </span>
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="780927631137832970" id="message-780927631137832970" title="Message sent: 24-Nov-20 11:47 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Kiedy zostałaś &#39;Dzieckiem Mroku&#39;?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 11:50 PM</span>
+
+            <div class="chatlog__message " data-message-id="780928327103807508" id="message-780928327103807508" title="Message sent: 24-Nov-20 11:50 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Chwilę się zamyśliła, potem z lekkim zakłopotaniem powiedziała - &quot;Minęło 8 dni&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">24-Nov-20 11:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="780929035264852052" id="message-780929035264852052" title="Message sent: 24-Nov-20 11:53 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;8 dni!&quot; Parsknął. &quot;To musi być... niełatwe. Swego czasu mnie zabrano do willi na 6 miesięcy, żeby się wszystkiego nauczyć.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="780930655722012712" id="message-780930655722012712" title="Message sent: 24-Nov-20 11:59 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Ja m&#243;głbym Ci dać parę wskaz&#243;wek.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 12:13 AM</span>
+
+            <div class="chatlog__message " data-message-id="780934158871429170" id="message-780934158871429170" title="Message sent: 25-Nov-20 12:13 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Jak najbardziej. Chętnie posłucham.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 12:22 AM</span>
+
+            <div class="chatlog__message " data-message-id="780936335401680906" id="message-780936335401680906" title="Message sent: 25-Nov-20 12:22 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„Primo, nie ufaj nikomu, jest to bardzo oczywiste, ale często zapominane. Widzę, że Tw&#243;j stw&#243;rca Cię nie opuścił. To jest dobre. Czasami się zdarza, że zostawiają nowo narodzonych na pastwę losu, co jest bardzo ryzykowne dla maskarady. Mi możesz też ufać. Oczywiście!” Uśmiecha się szeroko i bez przerwy na wdech (bo po co?) kontynuuje: „Secundo, jeśli masz jakichś bliskich ze swojego byłego życia, to zapomni o nich, jeśli Ci na nich zależy. Oni są teraz już tylko obciążeniem dla nas i środkiem szantażu. Nikomu komu nie ufasz nie możesz m&#243;wić, że ktoś taki istnieje! Byłaś jedynaczką, rodzic&#243;w nie znałaś i nie wyszłaś za mąż lub się nie ożeniłaś. Gdyby ktoś pytał.”</span>
+
+                                <span class="chatlog__edited-timestamp" title="25-Nov-20 12:22 AM"> </span>
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 12:36 AM</span>
+
+            <div class="chatlog__message " data-message-id="780939896666718230" id="message-780939896666718230" title="Message sent: 25-Nov-20 12:36 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Chcesz powiedzieć że ty porzuciłeś wszystkich swoich bliskich?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 12:38 AM</span>
+
+            <div class="chatlog__message " data-message-id="780940385543389184" id="message-780940385543389184" title="Message sent: 25-Nov-20 12:38 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„Ja, m&#243;j Stw&#243;rca, my wszyscy to robimy.”</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="780940770059616266" id="message-780940770059616266" title="Message sent: 25-Nov-20 12:39 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„My już nie jesteśmy ludźmi. Jesteśmy... tak jakby odmienną rasą. Trzymamy się ‚naszych’.”</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 12:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="781121901292552222" id="message-781121901292552222" title="Message sent: 25-Nov-20 12:39 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Ja wciąż czuję się bardziej człowiekiem niż... Najgorsze jest chyba to milczenie. Nie mogę nikomu powiedzieć, nikomu z najbliższych. Przez sam ten fakt odsuwam ich od siebie, wymyślam kolejne kłamstwa by nie spotkać się z nimi w ciągu dnia. Jak to było dla ciebie te 10 lat temu?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 12:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="781123385635242006" id="message-781123385635242006" title="Message sent: 25-Nov-20 12:45 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Jak już m&#243;wiłem, 6 miesięcy mnie nie było w mieści. Nie miałem nawet jak się spotkać z nimi, czyli było to dość łatwe jednak, ale wewnątrz się gotowałem, ten gł&#243;d, inne życie z dnia na dzień. M&#243;j stw&#243;rca był bardzo zdeterminowany, chciał swoje arcydzieło i je ostatecznie dostał.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="781123626400219147" id="message-781123626400219147" title="Message sent: 25-Nov-20 12:46 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Na początku też jeszcze nie akceptowałem swojej nowej natury, ale 6 miesięcy to dużo czasu dla człowieka, żeby się przyzwyczaić.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="781123669564850227" id="message-781123669564850227" title="Message sent: 25-Nov-20 12:46 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;I to też zrobiłem.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="781124029787930624" id="message-781124029787930624" title="Message sent: 25-Nov-20 12:48 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Wydaje się być bardzo pewny siebie, ale myślisz, że jest coś czego Ci nie m&#243;wi. Jest mała niepewność z jego głosie, jakby był mały szczeg&#243;ł, kt&#243;ry Ci nie pasuje. Myślę, że jako prawniczka jesteś w stanie to zauważyć.</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 01:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="781128577093206027" id="message-781128577093206027" title="Message sent: 25-Nov-20 01:06 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Ale dobra, wystarczy o mnie, jakie plany ma wobec Ciebie Tw&#243;j Stw&#243;rca?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 01:08 PM</span>
+
+            <div class="chatlog__message " data-message-id="781129273603784734" id="message-781129273603784734" title="Message sent: 25-Nov-20 01:08 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Wydawała się zaskoczona twoim pytaniem - &quot;To chyba nie mnie powinieneś o to pytać.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+         
+    </div>
+
+    <div class="chatlog__messages">
+         
+
+
+        <span class="chatlog__timestamp">25-Nov-20 01:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="781129896612724746" id="message-781129896612724746" title="Message sent: 25-Nov-20 01:11 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Wasza rozmowa prawdopodobnie przeniosła się w bardziej przytulny zakątek lokalu, ale po słowach Mii przypominacie sobie, że Bruno nie zniknął z pola widzenia - nadal jest nieopodal. Wygląda na to, że czuwa.</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 01:13 PM</span>
+
+            <div class="chatlog__message " data-message-id="781130538240966692" id="message-781130538240966692" title="Message sent: 25-Nov-20 01:13 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Czy tobie tw&#243;j stw&#243;rca powiedział ci o swoich planach?&quot; - zapytała ciszej</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 01:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="781132139327389697" id="message-781132139327389697" title="Message sent: 25-Nov-20 01:20 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Oczywiście! Jednym celem klanu Toreador to odnajdywanie i zachowanie piękna i talentu.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="781132382357946439" id="message-781132382357946439" title="Message sent: 25-Nov-20 01:21 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Warto było mnie zakonserwować w wieku 35 lat.&quot; Śmieje się.</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="781132706079309856" id="message-781132706079309856" title="Message sent: 25-Nov-20 01:22 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Tak pomyślał m&#243;j Stw&#243;rca; czyż nie miał racji?&quot; Rozkłada ręce na boku i się patrzy na siebie.</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 01:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="781134400741703690" id="message-781134400741703690" title="Message sent: 25-Nov-20 01:29 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Nieznaczny uśmiech pojawia się na jej ustach, po czym jej wzrok lustruje cię od st&#243;p do gł&#243;w - &quot;Jeżeli taki miał cel, to chyba dobrze zrobił&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 01:30 PM</span>
+
+            <div class="chatlog__message " data-message-id="781134771337035806" id="message-781134771337035806" title="Message sent: 25-Nov-20 01:30 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Czy jesteś w stanie rozwijać dalej sw&#243;j talent muzyczny w stanie kt&#243;rym jesteś? - zapytała zaciekawiona</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 02:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="781144724353581088" id="message-781144724353581088" title="Message sent: 25-Nov-20 02:10 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„Rozwijać? Jak najbardziej, ale powiedzmy, że to przerasta już ludzkie możliwości. Fizycznie jestem w najwyższej lidze por&#243;wnując z śmiertelnikami. Ale dar Kaina daje możliwości o kt&#243;rych bym wcześniej nie marzył. Na razie bym to nazwał darem przekonywania. Jestem bardziej przekonujący na scenie. Ludzie mnie potrzegają... milej.”</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 02:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="781150802517426177" id="message-781150802517426177" title="Message sent: 25-Nov-20 02:34 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Kto jest twoim stw&#243;rcą? Ktoś znany może?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 02:41 PM</span>
+
+            <div class="chatlog__message " data-message-id="781152569682034698" id="message-781152569682034698" title="Message sent: 25-Nov-20 02:41 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„Znany pfff! On jest jednym z wsp&#243;łczesnych bog&#243;w opery: Dmitri Aleksandrovich Hvorostovsky! Ani nie wiesz jaki to zaszczyt, że mnie wybrał.”</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="781153120976633877" id="message-781153120976633877" title="Message sent: 25-Nov-20 02:43 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„Jakie to absurdalne, że on jest spokrewnionym. Wyobraź sobie być znanym na całym świecie i mieć takie podw&#243;jne życie!” Nie umie się powstrzymać od głośnego śmiechu.</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 03:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="781157860028579881" id="message-781157860028579881" title="Message sent: 25-Nov-20 03:02 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Tw&#243;j stw&#243;rca chyba już się nie pokazuje publicznie?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 03:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="781159874070446142" id="message-781159874070446142" title="Message sent: 25-Nov-20 03:10 PM">
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="781159990915891222" id="message-781159990915891222" title="Message sent: 25-Nov-20 03:10 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„Niestety zniknął trzy lata temu.”</span>
+
+                                <span class="chatlog__edited-timestamp" title="25-Nov-20 04:15 PM"> </span>
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="781160297426714624" id="message-781160297426714624" title="Message sent: 25-Nov-20 03:12 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„Ale widziałaś jego płuca? Za życia to wyciągał takie wokalizy, że szok! Minutami bez wdechu.”</span>
+
+                                <span class="chatlog__edited-timestamp" title="25-Nov-20 04:15 PM"> </span>
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 03:25 PM</span>
+
+            <div class="chatlog__message " data-message-id="781163646852136981" id="message-781163646852136981" title="Message sent: 25-Nov-20 03:25 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Nie miałam okazji, nie jestem lekarzem. Byłam chyba raz na jego występie, ale to było dawno. W ostatnich latach nie miałam czasu na takie rzeczy. Może teraz będzie inaczej&quot; - na te słowa trochę się zamyśliła</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 03:30 PM</span>
+
+            <div class="chatlog__message " data-message-id="781164828609871882" id="message-781164828609871882" title="Message sent: 25-Nov-20 03:30 PM">
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="781165157740052541" id="message-781165157740052541" title="Message sent: 25-Nov-20 03:31 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„Oj teraz będzie wszystko inaczej. Może wpadniesz w piątek na moje przedstawienie, będzie Cyrulik z Sewilli.”</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="781165265013571634" id="message-781165265013571634" title="Message sent: 25-Nov-20 03:31 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„Co możesz mieć innego do roboty?”</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 03:37 PM</span>
+
+            <div class="chatlog__message " data-message-id="781166595288334357" id="message-781166595288334357" title="Message sent: 25-Nov-20 03:37 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Mam trochę pracy...staram się zarobić na życi...funkcjonowanie. Ale znajdę czas jeśli Bruno nie będzie miał nic przeciwko.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 03:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="781170438205866014" id="message-781170438205866014" title="Message sent: 25-Nov-20 03:52 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„No skoro uważasz, że trzeba się spytać to możemy to zrobić.” Używam swoich wyostrzonych zmysł&#243;w (Auspex), żeby go wypatrzeć.</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+         
+    </div>
+
+    <div class="chatlog__messages">
+         
+
+
+        <span class="chatlog__timestamp">25-Nov-20 04:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="781173221382553640" id="message-781173221382553640" title="Message sent: 25-Nov-20 04:03 PM">
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="781174950706413577" id="message-781174950706413577" title="Message sent: 25-Nov-20 04:10 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">
+
+Wibrujące barwy nocnego klubu uderzają w Twoje wzmocnione oczy, ale spomiędzy tego kalejdoskopu łatwo wychwytujesz jego sylwetkę. Chwilowo nie jest zwr&#243;cony ku Wam.</span>
+
+                                <span class="chatlog__edited-timestamp" title="25-Nov-20 04:19 PM"> </span>
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 04:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="781176744090140692" id="message-781176744090140692" title="Message sent: 25-Nov-20 04:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">
+M&#243;wię do Mii: „zobacz! Tam jest. Zapytajmy się od razu.”</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 04:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="781177431867654184" id="message-781177431867654184" title="Message sent: 25-Nov-20 04:20 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Dobrze&quot; - można było wyczuć lekką niepewność, ale ruszyła razem z tobą w jego kierunku.</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+         
+    </div>
+
+    <div class="chatlog__messages">
+         
+
+
+        <span class="chatlog__timestamp">25-Nov-20 04:24 PM</span>
+
+            <div class="chatlog__message " data-message-id="781178626262564874" id="message-781178626262564874" title="Message sent: 25-Nov-20 04:24 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Obr&#243;cił się ku Wam gdy byliście kilka krok&#243;w od jego stolika. Atrakcyjna kobieta - lecz nie tak atrakcyjna jak Wasza dw&#243;jka - wstała i oddaliła się od jego towarzystwa lekko chwiejnym krokiem po tym, jak wyszeptał do niej parę sł&#243;w.
+
+&quot;Mia. Panie Benedict.&quot; - odpowiedział wyczekująco.</span>
+
+                                <span class="chatlog__edited-timestamp" title="25-Nov-20 04:33 PM"> </span>
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 04:46 PM</span>
+
+            <div class="chatlog__message " data-message-id="781183926470443050" id="message-781183926470443050" title="Message sent: 25-Nov-20 04:46 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Benedict zaprosił mnie na sw&#243;j występ w operze w ten piątek. Sądzisz, że mogłabym p&#243;jść? Może moglibyśmy p&#243;jść razem?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+         
+    </div>
+
+    <div class="chatlog__messages">
+         
+
+
+        <span class="chatlog__timestamp">25-Nov-20 04:55 PM</span>
+
+            <div class="chatlog__message " data-message-id="781186386132467783" id="message-781186386132467783" title="Message sent: 25-Nov-20 04:55 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Przez moment milczał, obserwując Benedicta.
+
+&quot;Z przyjemnością. Chicagowskie media sceniczne niezwykle ciepło wypowiadają się o pańskim kunszcie wykonawczym oraz o wsp&#243;łpracy z nowym dyrektorem Opery Lirycznej. Teraz gdy już ujrzałem pańską... prywatną stroną życia, chętnie zapoznam się z tą medialną.&quot;
+
+Nim mogła paść odpowiedź, dodał: &quot;Biorąc pod uwagę niedawne zajście, uważam że w dobrym tonie byłoby zaoferowanie nieodpłatnego dostępu do najlepszych miejsc na widowni.&quot;</span>
+
+                                <span class="chatlog__edited-timestamp" title="25-Nov-20 04:57 PM"> </span>
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 05:12 PM</span>
+
+            <div class="chatlog__message " data-message-id="781190661982126090" id="message-781190661982126090" title="Message sent: 25-Nov-20 05:12 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„Ależ oczywiście! Przy wejściu możecie podać wasze imiona i was zaprowadzą do loży. Przyjmij ten skromny dar w ramach przeprosin za zaistniałą sytuacje.” Kłania się.</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+         
+    </div>
+
+    <div class="chatlog__messages">
+         
+
+
+        <span class="chatlog__timestamp">25-Nov-20 05:24 PM</span>
+
+            <div class="chatlog__message " data-message-id="781193502717509732" id="message-781193502717509732" title="Message sent: 25-Nov-20 05:24 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Bardzo doceniam ten gest. Proszę o uwzględnienie mnie na liście pod nazwiskiem Mathias Hallund.&quot;
+
+Chwilę p&#243;źniej zwr&#243;cił się do Mii: &quot;Noc jest wciąż młoda, a jak widzę, Wasza kr&#243;tka rozmowa jest dla Ciebie całkiem owocna.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 06:15 PM</span>
+
+            <div class="chatlog__message " data-message-id="781206466148302848" id="message-781206466148302848" title="Message sent: 25-Nov-20 06:15 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Na to wygląda.&quot; - uśmiechnęła się - &quot;Cieszę się, że mogliśmy się poznać&quot; - spojrzała na Benedicta</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://raw.githubusercontent.com/zpvisla/myHosting/main/benedict.jpg?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Benedict#7713" data-user-id="362156290367029255" style="">Benedict</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 06:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="781207668923695104" id="message-781207668923695104" title="Message sent: 25-Nov-20 06:20 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">„Cała przyjemność po mojej stronie i Ciebie też panie Bruno. Aż dziwne, że wcześniej się nie poznaliśmy, ja tu czasami bywam.”</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+         
+    </div>
+
+    <div class="chatlog__messages">
+         
+
+
+        <span class="chatlog__timestamp">25-Nov-20 08:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="781240268254871603" id="message-781240268254871603" title="Message sent: 25-Nov-20 08:29 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Dotychczas nie odwiedzałem tego miejsca, ani w towarzystwie Mii, ani samotnie. Jest przytulne, z daleka od wielkich tłum&#243;w oraz oferuje zaspokojenie potrzeb ciała, a wszystko to czyni je całkiem atrakcyjnym. Wartym powt&#243;rnych odwiedzin&quot; - ostatnie słowa rzucił zerkając na Mię.
+
+<em>Jeżeli zgadzacie się z jego oceną sytuacji, poproszę kt&#243;reś z Was o propozycję nazwy tego lokalu. :)</em></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/859530051875635220/68e644770abc1fec178dafa07c19d120.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mia#0000" data-user-id="859530051875635220" style="">Mia</span>
+
+
+        <span class="chatlog__timestamp">25-Nov-20 09:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="781252155792162847" id="message-781252155792162847" title="Message sent: 25-Nov-20 09:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(Jak najbardziej, będziemy mogli wracać pamięcią do miejsca w kt&#243;rym się poznaliśmy. Proponuję Bestial Beats).</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+</div>
+<div class="postamble">
+</div>
+
+</body>
+
+</html>
